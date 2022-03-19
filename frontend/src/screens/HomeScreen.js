@@ -1,9 +1,16 @@
-import React from 'react'
-import data from '../data.js'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 import Product from '../components/Product'
 
 function HomeScreen() {
-  const products = data.products
+  const [products, setProducts] = useState([])
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data } = await axios.get('/api/products')
+      setProducts(data)
+    }
+    fetchData()
+  }, [])
 
   return (
     <div className='row center'>
