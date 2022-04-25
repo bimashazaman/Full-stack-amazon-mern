@@ -1,28 +1,31 @@
-import React from 'react'
-import '../App.css'
-import Rating from './Rating'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import Rating from './Rating';
 
-function Product(props) {
-  const product = props.product
-  const productId = props.product._id
-
+export default function Product(props) {
+  const { product } = props;
   return (
-    <div key={productId} className='card'>
-      <a href={`/product/${productId}`}>
-        <img className='medium' src={product.image} alt={product.name} />
-      </a>
-      <div className='card-body'>
-        <h3>
-          <a href={`/product/${productId}`}>{product.name}</a>
-        </h3>
-        <Rating rating={product.rating} numReviews={product.numReviews} />
-
-        <div className='price'>
-          $<span>{product.price}</span>
+    <div key={product._id} className="card">
+      <Link to={`/product/${product._id}`}>
+        <img className="medium" src={product.image} alt={product.name} />
+      </Link>
+      <div className="card-body">
+        <Link to={`/product/${product._id}`}>
+          <h2>{product.name}</h2>
+        </Link>
+        <Rating
+          rating={product.rating}
+          numReviews={product.numReviews}
+        ></Rating>
+        <div className="row">
+          <div className="price">${product.price}</div>
+          <div>
+            <Link to={`/seller/${product.seller._id}`}>
+              {product.seller.seller.name}
+            </Link>
+          </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
-
-export default Product

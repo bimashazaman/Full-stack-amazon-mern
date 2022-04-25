@@ -1,24 +1,43 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
-import Product from '../components/Product'
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Product from "../components/Product";
+import LoadingBox from "../components/LoadingBox";
+import MessageBox from "../components/MessageBox";
 
 function HomeScreen() {
-  const [products, setProducts] = useState([])
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await axios.get('/api/products')
-      setProducts(data)
-    }
-    fetchData()
-  }, [])
+      try {
+        setLoading(true);
+        const { data } = await axios.get("/api/products");
+        setLoading(false);
+        setProducts(data);
+      } catch (err) {
+        setLoading(false);
+        setError(err.massage);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
-    <div className='row center'>
-      {products.map((product) => (
-        <Product key={product._id} product={product}></Product>
-      ))}
+    <div>
+      {loading ? (
+        <LoadingBox></LoadingBox>
+      ) : error ? (
+        <MessageBox>{error}</MessageBox>
+      ) : (
+        <div className="row center">
+          {products.map((product) => (
+            <Product key={product._id} product={product}></Product>
+          ))}
+        </div>
+      )}
     </div>
-  )
+  );
 }
 
-export default HomeScreen
+export default HomeScreen;

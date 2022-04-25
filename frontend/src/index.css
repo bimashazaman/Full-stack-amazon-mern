@@ -209,3 +209,19 @@ img.large {
   max-width: 50rem;
   width: 100%;
 }
+
+.alert {
+  background-color: #ffc000;
+  border-radius: 0.5rem;
+  color: #404040;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.alert-info {
+  background-color: #c0c0c0;
+}
+
+.alert-error {
+  background-color: #ff0000;
+}
